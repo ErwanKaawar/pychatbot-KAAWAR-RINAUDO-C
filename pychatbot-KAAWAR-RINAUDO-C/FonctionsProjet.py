@@ -20,3 +20,5 @@ def prenoms(nom_president): #Ce code va permettre de récuperer le prénom d'un 
     for cle,valeurs in dico_prenom_nom.items():
         if nom_president==cle:
             return valeurs
+def hello(prenom):
+    return "hello "+prenom

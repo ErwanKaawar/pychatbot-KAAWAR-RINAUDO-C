@@ -1,19 +1,21 @@
 def noms_president(liste_nom_fichier): #Extraire les noms des présidents à partir des noms des fichiers texte fournis
+    liste_noms=[]
     for k in liste_nom_fichier:
         nom=""
         Trouve=True
         i=0
         while Trouve:
             i+=1
-            if nom_fichier[i]=='_':
-                nom_fichier=nom_fichier[i+1:len(nom_fichier)]
+            if k[i]=='_':
+                k=k[i+1:len(k)]
                 Trouve=False
     #Dans le code ci-dessus on a enlevé tout ce qui se trouvait avant le Nom
         i=0
-        while 65<=ord(nom_fichier[i])<=90 or 97<=ord(nom_fichier[i])<=122:
-            nom = nom + nom_fichier[i]
+        while 65<=ord(k[i])<=90 or 97<=ord(k[i])<=122:
+            nom = nom + k[i]
             i+=1
-        return nom
+        liste_noms.append(nom)
+    return liste_noms
         #Et Dans celui-ci on a enlevé tout ce qui se trouvait après le nom c'est à dire tout les termes non alphabétiques
 
 def prenoms(nom_president): #Ce code va permettre de récuperer le prénom d'un président à l'aide de son nom

@@ -24,14 +24,10 @@ def prenoms(nom_president): #Ce code va permettre de récuperer le prénom d'un 
         if nom_president==cle:
             return valeurs
 
-def noms(liste_): #Ce code va permettre de récuperer le prénom d'un président à l'aide de son nom
-    dico_prenom_nom={"Chirac":"Jacques","Giscrad d’Estaing":"Valéry","Mitterrand":"François","Macron":"Emmanuel","Sarkozy":"Nicolas"}
-    for cle,valeurs in dico_prenom_nom.items():
-        if nom_president==valeurs:
-            return cle
-
 def noms(liste_nomfichier):
     liste=noms_president(liste_nomfichier)
     return liste
-
-
+nom_fichierr ='../Nomination_Chirac1.txt'
+f=open(nom_fichierr,"w")
+contenu=f.read()
+print(contenu)

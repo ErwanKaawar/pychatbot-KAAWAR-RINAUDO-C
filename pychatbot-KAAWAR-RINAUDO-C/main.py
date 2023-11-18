@@ -1,6 +1,12 @@
+import os
 from FonctionsProjet import *
 if __name__ == '__main__':
-    if __name__ == '__main__':
-        print(noms_president(["Nomination_Sarkozy.txt"]))
-        print(prenoms("Sarkozy"))
-        print(noms(["Nomination_Sarkozy.txt","Nomination_mitterand99.txt"]))
+    phrase = "Vif juge trempez ce blond whisky aqueux"
+    print(noms_president("Nomination_Sarkozy87.txt"))
+    print(prenoms("Sarkozy"))
+    print(prenoms("Sarkozy"))
+    print(prenoms("Sarkozy"))
+    directory = "./speeches"
+    files_names = list_of_files(directory, "txt")
+    print(files_names)
+    print(convertirMin(files_names)) # Crée 8 nouveaux fichiers avec texte minuscule

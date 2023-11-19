@@ -1,4 +1,5 @@
-import fileinput
+
+from math import *
 import os
 def noms_president(nom_fichier): #Extraire les noms des présidents à partir des noms des fichiers texte fournis
     nom=""
@@ -48,6 +49,52 @@ def convertirMin(listeFichier):
             fd.write(TexteMin)
             fd.close()
     # La fonction peut prendre un certains temps (10-15s)
+def Ponctuation(listedeFichiers):
+    ponctuation = '.;:!,?"()-'
+    for i in listedeFichiers:  # On va parcourir Chaque fichier
+        fichier_Courant = 'cleaned/' + str(i)
+        NouveauTexte = ''  # Cette variable sera le nouveau texte dénué de tout caractère de ponctuation
+        with open(fichier_Courant, "r") as fc:
+            contenu = fc.readlines()
+            for ligne in contenu:  # On va lire le fichier ligne par ligne
+                indice = 0  # On incrémente un compteur qui va donnner l'indice du caractère auquel j se trouve
+                for j in ligne:  # On parcours chaque ligne
+                    if j in ponctuation:  # et on va regarder s'il y a la présence de caractères de ponctuation, si oui, chacun d'eux sera supprimé
+                        if str(ligne[indice-1]) != " " and str(ligne[indice+1]) != " ": #  ou remplacés par un espace
+                            ligne[indice] = " "
+                        else:
+                            del ligne[indice]
+                    indice += 1
+            fc.close()
+        with open(fichier_Courant, "w") as fd:  # On va coller le nouveau texte dans le meme fichier
+            fd.write(NouveauTexte)
+            fd.close()
+
+def DictNbrMot(texte):
+    dico={}
+    mot=""
+    for i in texte:
+        if i==" ":
+            if mot not in dico:
+                dico[mot]=1
+            else:
+                dico[mot]+=1
+            mot=""
+        else:
+            mot+=i
+    if mot not in dico: #Pour le dernier mot vu qu'il n'y a pas d'espace à la fin
+        dico[mot] = 1
+    else:
+        dico[mot] += 1
+    print(dico)
+
+
+
+
+
+
+
+
 
 
 

@@ -50,8 +50,8 @@ def convertirMin(listeFichier):
     # La fonction peut prendre un certains temps (10-15s)
 def Ponctuation(listeFichierCleaned):
     ponctuations = ['!', '"', '#', '$', '%', '&','(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>',
-                    '?', '@', '[', ']', '^', '{', '|', '}', '~']
-    ponctuationsspéciaux=["'",'','`','-','_']
+                    '?', '@', '[', ']', '^', '{', '|', '}', '~'] #si il y a un de ces caractères on va le supprimer
+    ponctuationsspéciaux=["'",'','`','-','_'] #ces caractères sont dits spéciaux car ils permettent la concaténation entre 2 mots on va donc les remplacer par un espace
     for i in listeFichierCleaned:   #On va parcourir Chaque fichier
         fichier_Courant='cleaned/'+str(i)
         texteNoPonct=''
@@ -78,36 +78,36 @@ def Ponctuation(listeFichierCleaned):
                 espace_en_trop = False
         FichierDestinationCleaned='cleaned/'+str(i)
         with open(FichierDestinationCleaned, "w") as fd:
-            fd.write(textefinal)
+            fd.write(textefinal) #On écrit le nouveau fichier dans le dossier cleaned
             fd.close()
 
-def DictNbrMot(texte):
+def DictNbrMot(texte): #Cette variable va calculer le score TF de chaque mot dans un texte
     dicoTF={}
     mot=""
     for i in texte:
-        if i==" ":
-            if mot not in dicoTF:
+        if i==" ": #L'espace permet la séparation entre les différents mots
+            if mot not in dicoTF: #Si le mot n'est pas dans dicoTF on l'initialise à 1
                 dicoTF[mot]=1
             else:
-                dicoTF[mot]+=1
-            mot=""
+                dicoTF[mot]+=1 #Sinon on ajoute 1 à sa valeur
+            mot="" #Lorsqu'on a ajouté le mot on peut réinitialiser la variable mot
         else:
-            mot+=i
+            mot+=i #On ajoute les caracteres qui ne sont pas des espaces
     if mot not in dicoTF: #Pour le dernier mot vu qu'il n'y a pas d'espace à la fin
         dicoTF[mot] = 1
     else:
         dicoTF[mot] += 1
     return dicoTF
 
-def calculTF(dossier,fichier):
+def calculTF(dossier,fichier): #Cette fonction va calculer le score TF d'un document à l'aide de la fonction DictNbrMot
     texte=""
     fichier_Courant = dossier + '/' + str(fichier)
     with open(fichier_Courant, "r") as fc:
         contenu = fc.readlines()
         for ligne in contenu:
-            texte += ligne
+            texte += ligne #On ajoute chaque ligne dans la variable texte
         fc.close()
-    return DictNbrMot(texte)
+    return DictNbrMot(texte) #On peut ensuite utiliser la fonctionDictNbrMot vu qu'on a un texte
 
 def calculIDF(dossier): #On entre en paramètre le dossier où se trouve l'ensemble des fichiers
     dicoIDF={}

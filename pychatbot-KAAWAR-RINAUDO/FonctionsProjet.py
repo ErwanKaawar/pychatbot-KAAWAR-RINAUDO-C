@@ -27,7 +27,7 @@ def list_of_files(directory, extension): #Fonction disponible sur Moodle, Il per
     for filename in os.listdir(directory):
         if filename.endswith(extension):
             files_names.append(filename)
-    return files_names
+    return files_names #Liste des fichiers txt
 
 
 def convertirMin(listeFichier):

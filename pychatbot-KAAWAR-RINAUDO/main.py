@@ -9,7 +9,7 @@ if __name__ == '__main__':
     #print(matriceTFIDF('cleaned'))
     #print(calculIDF('cleaned'))
     #print(motnonimportant('cleaned'))
-    #print(moteleve('cleaned'))
+    print(moteleve('cleaned'))
     print(mot_utilise('cleaned',"nation"))
     print(nom_fichier('cleaned','Chirac'))
     print(mot_repete('cleaned','Chirac'))

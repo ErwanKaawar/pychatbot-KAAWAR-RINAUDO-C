@@ -1,14 +1,17 @@
 import os
 from FonctionsProjet import *
 if __name__ == '__main__':
-    phrase = "Vif juge trempez ce blond whisky aqueux"
-    print(noms_president("Nomination_Sarkozy87.txt"))
-    print(prenoms("Sarkozy"))
-    print(prenoms("Sarkozy"))
-    print(prenoms("Sarkozy"))
     directory = "./speeches"
     files_names = list_of_files(directory, "txt")
-    print(files_names)
     print(convertirMin(files_names)) # Crée 8 nouveaux fichiers avec texte minuscule
     print(Ponctuation(files_names))
-    print(DictNbrMot("Bonjour Comment comment alors ju aujourd hui , ça va pour toi toi toi toi alors"))
+    #print(matriceTFIDF('cleaned'))
+    #print(DictNbrMot("Bonjour comment tu vas Bonjour Bonjour"))
+    #print(calculIDF('cleaned'))
+    #matricee=matriceTFIDF('cleaned')
+    #print(motnonimportant('cleaned'))
+    #print(moteleve(matricee))
+    #print(mot_utilise('cleaned',"nation"))
+    #print(nom_fichier('cleaned','Chirac'))
+    #print(mot_repete('cleaned','Chirac'))
+    #print(mot_hormis_nonimportant('cleaned'))

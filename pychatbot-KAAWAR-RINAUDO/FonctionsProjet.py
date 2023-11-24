@@ -135,56 +135,57 @@ def calculIDF(dossier): #On entre en paramètre le dossier où se trouve l'ensem
 def matriceTFIDF(dossier):
     ListeFichier=list_of_files(dossier, "txt")
     col=len(ListeFichier)
-    x=calculIDF(dossier)
-    ligne=len(x)
+    DicoIDF=calculIDF(dossier) #On crée le DicoIDF  avec comme clé chaque mot et comme valeur son score IDF
+    ligne=len(DicoIDF)
     listecle = []
-    for key in x.keys():
-        listecle.append(key)
+    for key in DicoIDF.keys():
+        listecle.append(key) #On récupère chaque mot contenu dans DicoIDF pour faire une liste de mot
     matrice=[]
     for i in range(ligne):
         L=[]
-        L.append(listecle[i])
+        L.append(listecle[i]) #On ajoute le mot en 1er
         for j in range(col):
-            dicoTF= calculTF(dossier, ListeFichier[j])
-            if listecle[i] not in dicoTF or listecle[i] not in x:
+            dicoTF= calculTF(dossier, ListeFichier[j]) #Dico de chaque mot avec son ScoreTF du fichier d'indice j dans listeFichier
+            if listecle[i] not in dicoTF or listecle[i] not in DicoIDF: #Si le mot n'est pas dans DicoTF ou il est pas dans DICOIDF alors son score sera de 0
                 L.append(0)
             else:
-                L.append((dicoTF[listecle[i]])*x[listecle[i]])
+                L.append((dicoTF[listecle[i]])*DicoIDF[listecle[i]]) #ScoreTFIDF=ScoreTF * ScoreIDF POUR CHAQUE mot dans chaque Document
         matrice.append(L)
     return matrice
+#Dans la fonction ci-dessus, on aura une matrice sous la forme [[mot1,scoreDoc1,scoreDoc2,scoreDoc3,...,ScoreDocNumeroDernierDoc],[mot2,....]...]]
 
 
 def motnonimportant(dossier):
-    matrice=matriceTFIDF(dossier)
+    matrice=matriceTFIDF(dossier)#On crée la matrice avec chaque mot qui a son score TFIDF de chaque document
     L=[]
-    ListeFichier=list_of_files("cleaned", "txt")
+    ListeFichier=list_of_files(dossier, "txt")
     nbrFichier=len(ListeFichier)
     for i in range(len(matrice)):
         somme = 0
-        for j in range(1,len(matrice[0])):
-            somme+=matrice[i][j]
+        for j in range(1,len(matrice[0])): #On commence à l'indice 1 car l'indice 0 équivaut au mot, les indices suivant sont les score TF-IDF du mot
+            somme+=matrice[i][j]        # On fait la somme de tous les score TF-IDF du mot
         if (somme/nbrFichier)<=1/8:     #On fait la moyenne de tous les TF-IDF est on prend ceux qui sont proches de 0
-            L.append(matrice[i][0])
+            L.append(matrice[i][0])     # On divise par 1/8  pour avoir un nombre proche de 0
     return L
 
-def moteleve(dossier):
-    matrice = matriceTFIDF(dossier)
+def mot_score_TFIDF_max(dossier):
+    matrice = matriceTFIDF(dossier) #On crée la matrice avec chaque mot qui a son score TFIDF de chaque document
     max=0
     L=[]
-    ListeFichier=list_of_files("cleaned", "txt")
+    ListeFichier=list_of_files(dossier, "txt")
     nbrFichier=len(ListeFichier)
     for i in range(len(matrice)):
         somme = 0
-        for j in range(1,len(matrice[0])):
-            somme+=matrice[i][j]
-        if (somme/nbrFichier)>max: #On fait la moyenne de tous les TF-IDF est on prend ceux qui sont proches de 0
+        for j in range(1,len(matrice[0])):#On commence à l'indice 1 car l'indice 0 équivaut au mot, les indices suivant sont les score TF-IDF du mot
+            somme+=matrice[i][j]  # On fait la somme de tous les score TF-IDF du mot
+        if (somme/nbrFichier)>max: #On fait la moyenne de tous les TF-IDF du MOT et s'il est plus grand que max, il devient max
             L=[]
-            L.append(matrice[i][0])
-            L.append(somme/nbrFichier)
-            max=somme/nbrFichier
-        elif (somme/nbrFichier)==max:
-            L.append(matrice[i][0])
-            L.append(somme/nbrFichier)
+            L.append(matrice[i][0]) #On ajoute le mot qui a ce score TF-IDF
+            L.append(somme/nbrFichier) #On ajoute son score moyen TF-IDF
+            max=somme/nbrFichier # On assigne le nouveau max
+        elif (somme/nbrFichier)==max: #Si 2 mots ou plus ont le même score moyen TF IDF et que c'est le max
+            L.append(matrice[i][0]) # Alors on ajoute le mot
+            L.append(somme/nbrFichier) # Et son score TF IDF
     return L #On affiche le ou les mots les plus importants avec leur score TF-IDF
 
 def mot_utilise(dossier,mot):
@@ -194,16 +195,16 @@ def mot_utilise(dossier,mot):
     ListeFichier=list_of_files(dossier, "txt")
     for k in ListeFichier:#On va parcourir Chaque fichier
         fichier_Courant=str(k)
-        scoreTF=calculTF(dossier,fichier_Courant)
-        if mot in scoreTF:
-            nom=noms_president(k)
-            if nom not in L:
+        scoreTF=calculTF(dossier,fichier_Courant)  #Dictionnaire de chaque mot associé à son score TF
+        if mot in scoreTF: #Si le mot est dans le dictionnaire ALORS le président l'aura prononcé
+            nom=noms_president(k) #On convertit le nom du fichier en le nom du président grace à la fonction noms_president
+            if nom not in L: #Pour éviter les doublons
                 L.append(nom)
-            if scoreTF[mot]>max:
-                presidentmax=[]
+            if scoreTF[mot]>max: #On cherche le président qui a le plus prononcé le mot
+                presidentmax=[]  # On réinitialise la liste car max a été battu
                 max=scoreTF[mot]
                 presidentmax.append(nom)
-            elif scoreTF[mot]==max:
+            elif scoreTF[mot]==max:  #Si deux présidents ou plus ont prononcé le meme nombre de fois et que c'est le max alors on ajoute à la liste de présidents
                 presidentmax.append(nom)
     print("Liste des présidents ayant prononcé le mot",mot,L,"Le président ayant le plus prononcé ce mot",presidentmax)
 
@@ -214,13 +215,13 @@ def nom_fichier(dossier,president): #Ce code va nous permettre de récupérer le
         fichier_Courant=str(k)
         if president in fichier_Courant:
             L.append(fichier_Courant)
-    return L
+    return L  #Liste de fichiers d'un président
 
 
 def mot_repete(dossier,president):
     L=[]
     max=0
-    fichiers_president=nom_fichier(dossier,president)
+    fichiers_president=nom_fichier(dossier,president) #On va récupérer l'ensemble des fichiers d'allocutions du président
     if len(fichiers_president)>1:  #Si un president a deux ou plus allocutions on va combiné les textes de ses allocutions
         texte = ""
         for i in fichiers_president:
@@ -230,7 +231,7 @@ def mot_repete(dossier,president):
                 for ligne in contenu:
                     texte += ligne
             fc.close()
-    else:
+    else:     #Si un président n'a qu'une allocution on va simplement récupérer le texte de son allocution
         texte=""
         fichier_Courant = str(dossier) + '/' + str(fichiers_president[0])
         with open(fichier_Courant, "r") as fc:
@@ -238,25 +239,25 @@ def mot_repete(dossier,president):
             for ligne in contenu:
                 texte += ligne
         fc.close()
-    Dico=DictNbrMot(texte)
-    for key,valeur in Dico.items():
+    Dico=DictNbrMot(texte) #Dictionnaire avec comme clé chaque mot et valeur son nombre d'occurrence
+    for key,valeur in Dico.items():  #Lorsqu'on a le texte On va récupérer le mot qui a le nombre d'occurrences le plus élevé
         if valeur>max:
-            L=[]
+            L=[]  #Réinitialisation de la liste, on va remplacer l'ancienne valeur par la nouvelle
             max=valeur
             L.append((key,max))
         elif valeur==max:  # SI deux mots ont le meme nombre d'apparitions dans le document
-            L.append((key,max))
+            L.append((key,max)) # Alors on ajoute la clé avec sa valeur DONC max
     return L
 
 def mot_hormis_nonimportant(dossier):
     listemot=[]
-    non_important=motnonimportant(dossier)
+    non_important=motnonimportant(dossier) #Liste des mots non important grace à la fonction motnonimportant
     ListeFichier=list_of_files(dossier, "txt")
     col=len(ListeFichier)
-    x=calculIDF(dossier)
-    ligne=len(x)
+    DicoIDF=calculIDF(dossier) #Dictionnaire de tous les mots avec leur score IDF
+    ligne=len(DicoIDF)
     listecle = []
-    for key in x.keys():
+    for key in DicoIDF.keys(): #On va ici récupérer seulement les clés Pour faire une liste de tous les mots existants
         listecle.append(key)
     matrice=[]
     for i in range(ligne):
@@ -272,10 +273,11 @@ def mot_hormis_nonimportant(dossier):
     for i in range(len(matrice)):
         evoque=True
         for j in range(1,len(matrice[0])):
-            if matrice[i][j]==0:
+            if matrice[i][j]==0: #Si un scoreTF d'un mot parmi tout ses scores TF équivaut à 0 ALORS un président ne l'aura pas évoqué DONC evoque=False
                 evoque=False
         if evoque and matrice[i][0] not in non_important:
-            listemot.append(matrice[i][0])
+            listemot.append(matrice[i][0]) #On va récupérer les mots qui ne sont pas dans non_important et que TOUS
+                                            #Les présidents ont évoque
     return listemot
 
 

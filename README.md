@@ -1,6 +1,6 @@
 # pychatbot-KAAWAR-RINAUDO-C
 
-Projet demandé par EFREI PARIS, développé par Erwan KAAWAR et Lucas Rinaudo, élève de L1 GROUPE C.
+Projet demandé par EFREI PARIS, développé par Erwan KAAWAR et Lucas Rinaudo, étudiants de L1 GROUPE C PROMO 2028.
 
 Procédure d'installation et d'utilisation des fichiers:
 

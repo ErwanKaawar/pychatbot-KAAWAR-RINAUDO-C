@@ -269,7 +269,7 @@ def mot_hormis_nonimportant(dossier):
                 L.append(0)
             else:
                 L.append((dicoTF[listecle[i]]))
-        matrice.append(L)
+        matrice.append(L) #Matrice des scoreTF de chaque mot dans chaque document
     for i in range(len(matrice)):
         evoque=True
         for j in range(1,len(matrice[0])):
@@ -280,20 +280,6 @@ def mot_hormis_nonimportant(dossier):
     return listemot
 
 
-def supprimer_espaces_en_trop(texte):
-    resultat = ""
-    espace_en_trop = False
-
-    for caractere in texte:
-        if caractere == ' ':
-            if not espace_en_trop:
-                resultat += caractere
-                espace_en_trop = True
-        else:
-            resultat += caractere
-            espace_en_trop = False
-
-    return resultat
 
 
 

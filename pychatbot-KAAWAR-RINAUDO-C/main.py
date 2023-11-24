@@ -6,7 +6,6 @@ if __name__ == '__main__':
     print(convertirMin(files_names)) # Crée 8 nouveaux fichiers avec texte minuscule
     print(Ponctuation(files_names))
     #print(matriceTFIDF('cleaned'))
-    #print(DictNbrMot("Bonjour comment tu vas Bonjour Bonjour"))
     #print(calculIDF('cleaned'))
     #matricee=matriceTFIDF('cleaned')
     #print(motnonimportant('cleaned'))
@@ -15,3 +14,4 @@ if __name__ == '__main__':
     #print(nom_fichier('cleaned','Chirac'))
     #print(mot_repete('cleaned','Chirac'))
     #print(mot_hormis_nonimportant('cleaned'))
+

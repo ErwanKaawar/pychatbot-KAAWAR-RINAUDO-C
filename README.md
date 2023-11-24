@@ -15,6 +15,22 @@ Procédure d'installation et d'utilisation des fichiers:
     le fichier main.py va permettre de tester les différentes fonctions contenues dans le dossier FonctionsProjet.py
     
 Liste des bugs connus :
+
+    - Il se peut qu'il y ait des fois des erreurs ressemblant à PermissionError: [Errno 13] Permission denied: 'cleaned/Nomination_Chirac1.txt'
+        si c'est le cas, après plusieurs re-éxecution la fonction devrait marcher.
+
+    - Aucun mot ne peut avoir dans chaque document un score TF-IDF égal à 0 c'est pour cela que dans la fonction motnonimportant, nous avons calculé la moyenne
+        des TF-IDF et pas simplement le fait que la somme des TF-IDF soit égale à 0.
+
+Notice d'utilisation des différentes fonctions :
+
+    En cours...
+
+
+
+
+
+        
   
     
  

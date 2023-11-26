@@ -48,7 +48,7 @@ def convertirMin(listeFichier):
             fd.write(TexteMin)
             fd.close()
     # La fonction peut prendre un certains temps (10-15s)
-def Ponctuation(listeFichierCleaned):
+def Ponctuation(listeFichierCleaned):  #Il faut exécuté la fonction ConvertirMin avant d'exécuter celle-là
     ponctuations = ['!', '"', '#', '$', '%', '&','(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>',
                     '?', '@', '[', ']', '^', '{', '|', '}', '~'] #si il y a un de ces caractères on va le supprimer
     ponctuationsspéciaux=["'",'','`','-','_'] #ces caractères sont dits spéciaux car ils permettent la concaténation entre 2 mots on va donc les remplacer par un espace
@@ -206,7 +206,7 @@ def mot_utilise(dossier,mot):
                 presidentmax.append(nom)
             elif scoreTF[mot]==max:  #Si deux présidents ou plus ont prononcé le meme nombre de fois et que c'est le max alors on ajoute à la liste de présidents
                 presidentmax.append(nom)
-    print("Liste des présidents ayant prononcé le mot",mot,L,"Le président ayant le plus prononcé ce mot",presidentmax)
+    return("Liste des présidents ayant prononcé le mot",mot,L,"Le président ayant le plus prononcé ce mot",presidentmax)
 
 def nom_fichier(dossier,president): #Ce code va nous permettre de récupérer les noms des fichiers à l'aide du nom d'un président
     ListeFichier=list_of_files(dossier, "txt")
@@ -248,6 +248,47 @@ def mot_repete(dossier,president):
         elif valeur==max:  # SI deux mots ont le meme nombre d'apparitions dans le document
             L.append((key,max)) # Alors on ajoute la clé avec sa valeur DONC max
     return L
+
+def ecologie_climat(liste_de_presidents):
+    president_max = 0  # variable, numéro du président ayant parlé en premier d'un des deux mots
+    indicemax = 999999  # informe de l'indice le plus petit de la première apparition d'un des deux mots
+    liste_mots = ["climat", "Climat", "climats", "Climats", "écologie", "Ecologie", "ecologie"]
+
+    president_numero = 1 # variable qui va informer à quel président on en est
+
+    for president in liste_de_presidents:
+        mot = ""
+
+        fichier_courant = nom_fichier('cleaned', president)
+        texte = ""  # On extrait le texte contenu dans le fichier
+
+        with open("cleaned/" + fichier_courant[0], "r") as fc:
+            contenu = fc.readlines()
+            for ligne in contenu:
+                texte += ligne
+        fc.close()
+
+        L = []  # L'idée ici est de mettre chaque mot du texte dans la liste (à des indices différents)
+        i = 0  # Pour ensuite pouvoir parcourir la liste jusqu'à la première apparition d'un des deux mots
+        #  dont l'indice sera gardé dans une variable(indicemax) qui sera comparée aux autres indices des premières apparitions dans les autres textes
+        while i < len(texte):
+            while i < len(texte) and texte[i] != " ":
+                mot += texte[i]
+                i += 1
+            L.append(mot)
+            mot = ""
+            i += 1
+
+        for indice in range(len(L)):
+            if L[indice] in liste_mots:
+                if indice < indicemax:
+                    indicemax = indice
+                    president_max = president_numero
+
+        president_numero += 1
+
+    return liste_de_presidents[president_max]
+
 
 def mot_hormis_nonimportant(dossier):
     listemot=[]

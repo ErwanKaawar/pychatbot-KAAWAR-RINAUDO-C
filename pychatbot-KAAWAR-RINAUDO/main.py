@@ -3,7 +3,6 @@ from FonctionsProjet import *
 if __name__ == '__main__':
     directory = "./speeches"
     files_names = list_of_files(directory, "txt")
-    print(files_names)
 
     def fonction_Noms_president():
         nom_fichier=input("Merci de rentrer le nom du fichier:")
@@ -51,18 +50,16 @@ if __name__ == '__main__':
     print("Taper 1: Noms_president : Cette fonction va vous permettre d'extraire le nom du président avec le nom du fichier fourni")
     print("Taper 2: prenoms : cela va permettre de rentrer le nom d'un president et d'obtenir son prénom")
     print("Taper 3: ConvertirMin : Cette fonction va convertir toutes les majuscules d'une liste de fichiers en minuscule et va les insérer dans de nouveaux documents dans le dossier cleaned")
-    print("Taper 4: Ponctuation : Cette fonction va supprimer toutes les ponctuations dans une liste de fichier, merci d'exécuté la fonction ConvertirMin avant celle-là")
+    print("Taper 4: Ponctuation : Cette fonction va supprimer toutes les ponctuations dans une liste de fichiers, merci d'exécuter la fonction ConvertirMin avant celle-là")
     print("Taper 5 : Calcul TF : Cette fonction va calculer le score TF de chaque mot dans un document")
     print("Taper 6 : Calcul IDF : Cette fonction va calculer le score IDF de chaque mot dans le corpus de documents")
     print("Taper 7 : Matrice TF IDF : Cette fonction va calculer le score TF IDF de chaque mot dans chaque document, la compréhension de la lecture de cette matrice est disponible dans la notice d'utilisation")
-    print("Taper 8 : mot non important : Cette fonction va retourner une liste de tous les mots non important")
+    print("Taper 8 : mot non important : Cette fonction va retourner une liste de tous les mots non importants")
     print("Taper 9 : mot score TF IDF MAX : cette fonction va retourner une liste du mot ou des mots ayant le plus grand score TF IDF")
-    print("Taper 10 : mot utilisé : Cette fonction va vous retourner les noms des présidents utilisant le mot demandé")
+    print("Taper 10 : mot utilisé : Cette fonction va vous retourner les noms des présidents utilisant le mot demandé, et celui qui l'a le plus utilisé")
     print("Taper 11 : mot repete : cette fonction va retourner la liste des ou du mot le plus répété par un president et le nombre de fois qu'il l'a répété ")
     print("Taper 12 : climat ecologie : cette fonction va indiquer le premier président à parler du climat et/ou de l’écologie ")
-    print("Taper 13 : mot hormis non important : Cette fonction va indiquer tous les mots que les présidents ont prononcé hormis les mots non importants")
-
-    print("0. Quitter")
+    print("Taper 13 : mot hormis non important : Cette fonction va indiquer les mots  que tous les présidents ont prononcés hormis les mots non importants")
 
 
     fonction_choisie=int(input("Merci de rentrer le numéro de la fonction que vous souhaitez utiliser:"))
@@ -92,6 +89,8 @@ if __name__ == '__main__':
         fonction_ecologie_climat()
     elif fonction_choisie==13:
         fonction_mot_hormis_non_important()
+    else:
+        print("Merci de rentrer un numéro valide")
 
 
 
